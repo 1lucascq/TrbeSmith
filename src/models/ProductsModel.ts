@@ -23,10 +23,11 @@ export default class ProductsModel {
     try {
       const { name, amount } = product;
       const query = 'INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?)';
-      // Não acha ResultSetHeader...
       const result = await this.connection.execute<ResultSetHeader>(query, [name, amount]);
       const [dataInserted] = result;
       const { insertId } = dataInserted;
+      console.log({ id: insertId, ...product });
+
       return { id: insertId, ...product };
     } catch (err) {
       throw new Error('Erro do servidor na requisição create do ProductsModel.');

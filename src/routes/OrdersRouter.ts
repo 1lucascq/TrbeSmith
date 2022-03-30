@@ -1,14 +1,10 @@
-// import { Router } from 'express';
-// import ContactsController from '../controllers/ProductsController';
+import { Router } from 'express';
+import OrdersController from '../controllers/OrdersController';
 
-// const router = Router();
+const router = Router();
 
-// const contactsController = new ContactsController();
+const ordersController = new OrdersController();
 
-// router.get('/', contactsController.getAll);
-// router.get('/:id', contactsController.getById);
-// router.post('/', ValidateData, contactsController.create);
-// router.put('/:id', ValidateData, contactsController.update);
-// router.delete('/:id', contactsController.destroy);
+router.get('/', ordersController.getAll);
 
-// export default router;
+export default router;

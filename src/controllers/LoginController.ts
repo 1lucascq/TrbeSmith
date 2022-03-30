@@ -1,0 +1,45 @@
+import { NextFunction, Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import * as jwt from 'jsonwebtoken';
+import { IUser } from '../interfaces';
+import 'express-async-errors';
+import LoginService from '../services/LoginService';
+
+// q q tinha que fazer aq?
+// const SECRET: string | undefined = process.env.JWT_SECRET;
+const SECRET: string | undefined = 'a';
+
+const SignOptions: jwt.SignOptions = {
+  expiresIn: '1d',
+  algorithm: 'HS256',
+};
+export default class LoginController {
+  constructor(private loginService = new LoginService()) { }
+
+  public create = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      if (!SECRET) {
+        console.log('ERRO POR CAUSA DA LOGICA DO SECRET');
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'secret unavailable' });
+      }
+
+      const { username, password }: IUser = req.body;
+      
+      // como login retornaria um 'undefined' --- é em caso de erro de requisição?
+      const id: number | false | undefined = await this.loginService.login({ username, password });
+      
+      if (!id) {
+        return res.status(StatusCodes.UNAUTHORIZED).json({ 
+          error: 'Username or password invalid',
+        });
+      }
+      
+      const token = jwt.sign({ payload: { id, username } }, SECRET, SignOptions);
+      console.log('TOKEN É::::', token);
+
+      return res.status(StatusCodes.OK).json({ token });    
+    } catch (err) {
+      next(err);
+    }  
+  };
+}

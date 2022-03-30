@@ -17,9 +17,6 @@ export default class OrdersModel {
         const { id, userId } = order;
         return { id, userId, products: [id] };
       });
-      console.log('---------------RESULT MODEL', result);
-      console.log('---------------ORDERS MODEL', orders);
-      // console.log('---------------RESULT MODEL', orders);
       return orders;
     } catch (err) {
       throw new Error('Erro do servidor na requisição getAll do OrdersModel.');

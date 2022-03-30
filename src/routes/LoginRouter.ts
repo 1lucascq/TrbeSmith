@@ -1,15 +1,11 @@
 import { Router } from 'express';
-import ContactsController from '../controllers/ProductsController';
-import ValidateData from '../middlewares/ValidateData';
+import LoginController from '../controllers/LoginController';
+import checkLoginData from '../middlewares/LoginValidation';
 
 const router = Router();
 
-const contactsController = new ContactsController();
+const loginController = new LoginController();
 
-router.get('/', contactsController.getAll);
-router.get('/:id', contactsController.getById);
-router.post('/', ValidateData, contactsController.create);
-router.put('/:id', ValidateData, contactsController.update);
-router.delete('/:id', contactsController.destroy);
+router.post('/', checkLoginData, loginController.create);
 
 export default router;

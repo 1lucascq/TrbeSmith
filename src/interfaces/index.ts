@@ -12,11 +12,20 @@ export interface IProductOrder extends IProduct{
 }
 
 export interface IUser {
+  id?: number
   username: string;
   classe: string;
   level: number;
   password: string;
 }
+
+// export interface IUserWithId {
+//   id?: number
+//   username: string;
+//   classe: string;
+//   level: number;
+//   password: string;
+// }
 
 export interface IOrders {
   id: number;

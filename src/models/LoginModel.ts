@@ -1,7 +1,7 @@
 import { Pool, RowDataPacket } from 'mysql2/promise';
 import { IUser } from '../interfaces';
 
-export default class UsersModel {
+export default class LoginModel {
   public connection: Pool;
 
   constructor(connection: Pool) {
@@ -16,23 +16,6 @@ export default class UsersModel {
       return users as IUser[];
     } catch (err) {
       throw new Error('Erro do servidor na requisição getAll do UsersModel.');
-    }
-  }
-
-  public async create(userData: IUser): Promise<void> {
-    try {
-      const {
-        username,
-        classe,
-        level,
-        password,
-      } = userData;
-      const 
-        q = 'INSERT INTO Trybesmith.Users (username, classe, level, password) VALUES (?, ?, ?, ?)';
-      await this.connection.execute(q, [username, classe, level, password]);
-      return;
-    } catch (err) {
-      throw new Error('Erro do servidor na requisição create do UsersModel.');
     }
   }
 }

@@ -1,5 +1,6 @@
 import UsersModel from '../models/UsersModel';
 import connection from '../models/connection';
+import { IUser } from '../interfaces';
 
 export default class UsersService {
   public usersModel: UsersModel;
@@ -8,13 +9,8 @@ export default class UsersService {
     this.usersModel = new UsersModel(connection);
   }
 
-  public async create(
-    username: string,
-    classe: string,
-    level: number,
-    password: string,
-  ) {
-    const newUser = await this.usersModel.create({ username, classe, level, password });
+  public async create(userData: IUser) {
+    const newUser = await this.usersModel.create(userData);
     return newUser;
   }
 }

@@ -11,7 +11,7 @@ export interface IProductOrder extends IProduct{
   orderId: null | number;
 }
 
-export interface INewUser {
+export interface IUser {
   username: string;
   classe: string;
   level: number;
@@ -31,4 +31,8 @@ export interface ILogin {
 
 export interface INewOrder {
   products: number[];
+}
+
+export interface ProcessEnv {
+  [key: string]: string | undefined
 }

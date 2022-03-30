@@ -236,7 +236,7 @@ describe.only("3 - Crie um endpoint para o cadastro de pessoas usuárias", () =>
     const result = await request(app).post("/users").send({
       username: "username",
       password: "senha1234",
-      level: "1",
+      level: "199999",
       classe: "classe",
     });
     expect(result.statusCode).toEqual(422);

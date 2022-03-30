@@ -1,11 +1,14 @@
 import { Router } from 'express';
-import ContactsRouter from './Products';
+import ProductsRouter from './ProductsRouter';
+// import UsersRouter from './UsersRouter';
+// import OrdersRouter from './OrdersRouter';
+// import LoginRouter from './LoginRouter';
 
 const router = Router();
 
-router.use('/products', ContactsRouter);
-router.use('/users', ContactsRouter);
-router.use('/orders', ContactsRouter);
-router.use('/login', ContactsRouter);
+router.use('/products', ProductsRouter);
+// router.use('/users', UsersRouter);
+// router.use('/orders', OrdersRouter);
+// router.use('/login', LoginRouter);
 
 export default router;

@@ -1,16 +1,20 @@
-import ProductsModel from '../models/ProductsModel';
+import UsersModel from '../models/UsersModel';
 import connection from '../models/connection';
-import { IProduct } from '../interfaces';
 
-export default class ProductsService {
-  public ProductsModel: ProductsModel;
+export default class UsersService {
+  public usersModel: UsersModel;
 
   constructor() {
-    this.ProductsModel = new ProductsModel(connection);
+    this.usersModel = new UsersModel(connection);
   }
 
-  public async getAll(): Promise<IProduct[]> {
-    const products: IProduct[] = await this.ProductsModel.getAll();
-    return products;
+  public async create(
+    username: string,
+    classe: string,
+    level: number,
+    password: string,
+  ) {
+    const newUser = await this.usersModel.create({ username, classe, level, password });
+    return newUser;
   }
 }

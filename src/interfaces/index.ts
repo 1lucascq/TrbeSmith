@@ -1,12 +1,13 @@
-export interface INewProduct {
+export interface IProduct {
+  id?: number;
   name: string;
-  amount: number;
+  amount: string;
 }
 
-export interface IProduct extends INewProduct{
+export interface IProductOrder extends IProduct{
   id: number;
   name: string;
-  amount: number;
+  amount: string;
   orderId: null | number;
 }
 

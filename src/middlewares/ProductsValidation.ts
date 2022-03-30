@@ -6,15 +6,15 @@ import { IProduct } from '../interfaces';
 const getSchema = (name: string, amount: string) => Joi.object({
   name: Joi.string().not().min(2).required()
     .messages({
-      'string.base': '"Name" must be a string',
-      'string.min': '"Name" must be longer than 2 characters',
-      'any.required': '"Name" is required',
+      'string.base': 'Name must be a string',
+      'string.min': 'Name must be longer than 2 characters',
+      'any.required': 'Name is required',
     }),
-  amount: Joi.number().not().min(2).required()
+  amount: Joi.string().not().min(2).required()
     .messages({
-      'string.base': '"Amount" must be a string',
-      'string.min': '"Amount" must be longer than 2 characters',
-      'any.required': '"Amount" is required',
+      'string.base': 'Amount must be a string',
+      'string.min': 'Amount must be longer than 2 characters',
+      'any.required': 'Amount is required',
     }),
 }).validate({ name, amount });
 

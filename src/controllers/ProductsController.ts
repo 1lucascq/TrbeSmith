@@ -20,7 +20,7 @@ export default class ProductsController {
     try {
       const { name, amount } = req.body;
       const newProduct: IProduct = await this.productsServices.create({ name, amount });
-      return res.status(StatusCodes.OK).json(newProduct);
+      return res.status(StatusCodes.CREATED).json({ item: newProduct });
     } catch (err) {
       next(err);
     }  

@@ -1,5 +1,4 @@
 import OrdersModel from '../models/OrdersModel';
-// import ProductsModel from '../models/ProductsModel';
 import connection from '../models/connection';
 import { INewOrderResponse, IOrders, ITokenPayload } from '../interfaces';
 

@@ -24,17 +24,18 @@ export default class OrdersModel {
     }
   }
 
-  public async create(orderProducts: number[], usrData: ITokenPayload): Promise<INewOrderResponse> {
+  public async create(products: number[], userData: ITokenPayload): Promise<INewOrderResponse> {
     try {
       const qOrder = 'INSERT INTO Trybesmith.Orders (userId) VALUES (?)';
-      const qPrd = 'UPDATE Trybesmith.Orders SET orderId = ? WHERE id = ?';
-      const [newOrderData] = await this.connection.execute<ResultSetHeader>(qOrder, [usrData.id]);
+      const qPrd = 'UPDATE Trybesmith.Products SET orderId = ? WHERE id = ?';
+      const [newOrderData] = await this.connection.execute<ResultSetHeader>(qOrder, [userData.id]);
       const { insertId } = newOrderData;
 
-      orderProducts.forEach(async (product) => {
+      products.forEach(async (product) => {
         await this.connection.execute<ResultSetHeader>(qPrd, [insertId, product]);
       });
-      return { order: { userId: usrData.id, products: orderProducts } } as INewOrderResponse;
+
+      return { order: { userId: userData.id, products } } as INewOrderResponse;
     } catch (err) {
       throw new Error('Erro do servidor na requisição create do OrdersModel.');
     }

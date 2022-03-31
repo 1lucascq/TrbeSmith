@@ -22,11 +22,15 @@ export default class OrdersController {
       const { products } = req.body;
       const { authorization } = req.headers;
       const { userData } = req;
-      if (!authorization) return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'unautd' });
-      if (!userData) return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'unautd' });
+      
+      if (!authorization) {
+        return res.status(StatusCodes.UNAUTHORIZED)
+          .json({ error: 'Unauthorized' });
+      }
+      if (!userData) return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Unauthorized' });
 
       const newOrder: INewOrderResponse = await this.ordersServices.create(products, userData);
-      return res.status(StatusCodes.CREATED).json({ newOrder });
+      return res.status(StatusCodes.CREATED).json(newOrder);
     } catch (err) {
       next(err);
     }  

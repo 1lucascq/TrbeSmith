@@ -293,6 +293,7 @@ describe.only("3 - Crie um endpoint para o cadastro de pessoas usuárias", () =>
       level: 2,
       classe: "classe",
     });
+    console.log(result);
     expect(result.statusCode).toEqual(201);
     expect(result.body).toBeDefined();
     expect(result.body.token).toBeDefined();

@@ -21,7 +21,6 @@ export default class UsersController {
 
       const { username, classe, level, password }: IUser = req.body;
       const payload = await this.usersService.create({ username, classe, level, password });
-      // const token = jwt.sign({ payload: { username, classe, level } }, SECRET, SignOptions);
       const token = jwt.sign(payload, SECRET, SignOptions);
 
       return res.status(StatusCodes.CREATED).json({ token });    

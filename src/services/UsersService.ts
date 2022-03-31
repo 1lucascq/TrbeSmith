@@ -1,6 +1,6 @@
 import UsersModel from '../models/UsersModel';
 import connection from '../models/connection';
-import { IUser, ITokenPayload } from '../interfaces';
+import { IUser, ITokenData } from '../interfaces';
 
 export default class UsersService {
   public usersModel: UsersModel;
@@ -10,7 +10,7 @@ export default class UsersService {
   }
 
   public async create(userData: IUser) {
-    const newUserId: ITokenPayload = await this.usersModel.create(userData);
+    const newUserId: ITokenData = await this.usersModel.create(userData);
     return newUserId;
   }
 }

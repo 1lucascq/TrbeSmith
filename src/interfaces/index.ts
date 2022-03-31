@@ -43,6 +43,11 @@ export interface INewOrderResponse {
   }
 }
 
+export interface ITokenData {
+  id: number;
+  username: string;
+}
+
 export interface IProcessEnv {
   [key: string]: string | undefined
 }

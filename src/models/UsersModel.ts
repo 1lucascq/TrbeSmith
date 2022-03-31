@@ -31,6 +31,8 @@ export default class UsersModel {
         q = 'INSERT INTO Trybesmith.Users (username, classe, level, password) VALUES (?, ?, ?, ?)';
       const result = await this.connection
         .execute<ResultSetHeader>(q, [username, classe, level, password]);
+      console.log(result);
+
       const [dataInserted] = result;
       const { insertId } = dataInserted;
       return { id: insertId, username } as ITokenData;

@@ -1,21 +1,24 @@
 import OrdersModel from '../models/OrdersModel';
+// import ProductsModel from '../models/ProductsModel';
 import connection from '../models/connection';
-import { IOrders } from '../interfaces';
+import { INewOrderResponse, IOrders, ITokenPayload } from '../interfaces';
 
 export default class OrdersService {
-  public OrdersModel: OrdersModel;
-  
+  public ordersModel: OrdersModel;
+
   constructor() {
-    this.OrdersModel = new OrdersModel(connection);
+    this.ordersModel = new OrdersModel(connection);
   }
 
   public async getAll(): Promise<IOrders[]> {
-    const orders: IOrders[] = await this.OrdersModel.getAll();
+    const orders: IOrders[] = await this.ordersModel.getAll();
     return orders;
   }
 
-  // public async create(product: IProduct): Promise<IProduct> {
-  //   const newProduct: IProduct = await this.OrdersModel.create(product);
-  //   return newProduct;
-  // }
+  public async create(products: number[], userData: ITokenPayload): Promise<INewOrderResponse> {
+    const newOrderResponse: INewOrderResponse = await
+    this.ordersModel.create(products, userData);
+    
+    return newOrderResponse;
+  }
 }

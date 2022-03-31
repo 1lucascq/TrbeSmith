@@ -1,3 +1,5 @@
+import { JwtPayload } from 'jsonwebtoken';
+
 export interface IProduct {
   id?: number;
   name: string;
@@ -19,14 +21,6 @@ export interface IUser {
   password: string;
 }
 
-// export interface IUserWithId {
-//   id?: number
-//   username: string;
-//   classe: string;
-//   level: number;
-//   password: string;
-// }
-
 export interface IOrders {
   id: number;
   userId: number;
@@ -42,6 +36,20 @@ export interface INewOrder {
   products: number[];
 }
 
-export interface ProcessEnv {
+export interface INewOrderResponse {
+  order: {
+    userId: number;
+    products: number[];
+  }
+}
+
+export interface IProcessEnv {
   [key: string]: string | undefined
+}
+
+export interface ITokenPayload extends JwtPayload {
+  payload?: {
+    id: number;
+    username: string;
+  }
 }

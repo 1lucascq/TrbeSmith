@@ -1,5 +1,5 @@
-import { Pool, RowDataPacket } from 'mysql2/promise';
-import { IUser } from '../interfaces';
+import { Pool, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
+import { IUser, ITokenPayload } from '../interfaces';
 
 export default class UsersModel {
   public connection: Pool;
@@ -19,7 +19,7 @@ export default class UsersModel {
     }
   }
 
-  public async create(userData: IUser): Promise<void> {
+  public async create(userData: IUser): Promise<ITokenPayload> {
     try {
       const {
         username,
@@ -29,8 +29,11 @@ export default class UsersModel {
       } = userData;
       const 
         q = 'INSERT INTO Trybesmith.Users (username, classe, level, password) VALUES (?, ?, ?, ?)';
-      await this.connection.execute(q, [username, classe, level, password]);
-      return;
+      const result = await this.connection
+        .execute<ResultSetHeader>(q, [username, classe, level, password]);
+      const [dataInserted] = result;
+      const { insertId } = dataInserted;
+      return { id: insertId, username } as ITokenPayload;
     } catch (err) {
       throw new Error('Erro do servidor na requisição create do UsersModel.');
     }

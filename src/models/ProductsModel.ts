@@ -26,7 +26,6 @@ export default class ProductsModel {
       const result = await this.connection.execute<ResultSetHeader>(query, [name, amount]);
       const [dataInserted] = result;
       const { insertId } = dataInserted;
-      console.log({ id: insertId, ...product });
 
       return { id: insertId, ...product };
     } catch (err) {

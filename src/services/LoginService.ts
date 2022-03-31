@@ -26,13 +26,3 @@ export default class LoginService {
     return user.id;
   }
 }
-
-// public async login(loginData: ILogin) {
-//   const user: IUser = await this.loginModel.login(loginData);
-//   const { id, password } = user;
-  
-//   // if (!this.isValidPassword(loginData.password, password)) return false;
-//   if (!LoginService.isValidPassword(loginData.password, password)) return false;
-
-//   return id;
-// }

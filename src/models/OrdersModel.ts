@@ -1,5 +1,6 @@
-import { Pool, RowDataPacket } from 'mysql2/promise';
-import { IOrders } from '../interfaces';
+import { Pool, RowDataPacket, ResultSetHeader } from 'mysql2/promise';
+// import { INewOrder, INewOrderResponse, IOrders, IProduct, ITokenPayload } from '../interfaces';
+import { INewOrderResponse, IOrders, ITokenPayload } from '../interfaces';
 
 export default class OrdersModel {
   public connection: Pool;
@@ -23,17 +24,44 @@ export default class OrdersModel {
     }
   }
 
-//   public async create(product: IOrders): Promise<IOrders> {
-//     try {
-//       const { name, amount } = product;
-//       const query = 'INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?)';
-//       // Não acha ResultSetHeader...
-//       const result = await this.connection.execute<ResultSetHeader>(query, [name, amount]);
+  public async create(orderProducts: number[], usrData: ITokenPayload): Promise<INewOrderResponse> {
+    try {
+      const qOrder = 'INSERT INTO Trybesmith.Orders (userId) VALUES (?)';
+      const qPrd = 'UPDATE Trybesmith.Orders SET orderId = ? WHERE id = ?';
+      const [newOrderData] = await this.connection.execute<ResultSetHeader>(qOrder, [usrData.id]);
+      const { insertId } = newOrderData;
+
+      orderProducts.forEach(async (product) => {
+        await this.connection.execute<ResultSetHeader>(qPrd, [insertId, product]);
+      });
+      return { order: { userId: usrData.id, products: orderProducts } } as INewOrderResponse;
+    } catch (err) {
+      throw new Error('Erro do servidor na requisição create do OrdersModel.');
+    }
+  }
+}
+
+// const result = await this.connection.execute<ResultSetHeader>(query, [name, amount]);
+// const [dataInserted] = result;
+// const { insertId } = dataInserted;
+// return { id: insertId, ...newOrder };
+
+// public async create(or: number[], usr: ITokenPayload, p: IProduct[]): Promise<INewOrderResponse> {
+//   try {
+//     // const { username, id } = userData;
+//     const qOrder = 'INSERT INTO Trybesmith.Orders (userId) VALUES (?)';
+//     const qProduct = 'INSERT INTO Trybesmith.Products (name, amount) VALUES (?, ?)';
+//     const newOrderResult = await this.connection.execute<ResultSetHeader>(qOrder, [usr.id]);
+//     const [dataInserted] = newOrderResult;
+//     const { insertId } = dataInserted;
+
+//     or.forEach(async (product) => {
+//       const result = await this.connection.execute<ResultSetHeader>(qProduct, [name, amount]);
 //       const [dataInserted] = result;
 //       const { insertId } = dataInserted;
-//       return { id: insertId, ...product };
-//     } catch (err) {
-//       throw new Error('Erro do servidor na requisição create do OrdersModel.');
-//     }
+//       return { id: insertId, ...newOrder };
+//     });
+//   } catch (err) {
+//     throw new Error('Erro do servidor na requisição create do OrdersModel.');
 //   }
-}
+// }

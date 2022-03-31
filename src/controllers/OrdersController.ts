@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { IOrders } from '../interfaces';
+import { INewOrderResponse, IOrders } from '../interfaces';
 import OrdersService from '../services/OrdersService';
+
 import 'express-async-errors';
 
 export default class OrdersController {
@@ -16,13 +17,18 @@ export default class OrdersController {
     }  
   };
 
-  // public create = async (req: Request, res: Response, next: NextFunction) => {
-  //   try {
-  //     const { name, amount } = req.body;
-  //     const newProduct: IOrders = await this.productsServices.create({ name, amount });
-  //     return res.status(StatusCodes.CREATED).json({ item: newProduct });
-  //   } catch (err) {
-  //     next(err);
-  //   }  
-  // };
+  public create = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { products } = req.body;
+      const { authorization } = req.headers;
+      const { userData } = req;
+      if (!authorization) return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'unautd' });
+      if (!userData) return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'unautd' });
+
+      const newOrder: INewOrderResponse = await this.ordersServices.create(products, userData);
+      return res.status(StatusCodes.CREATED).json({ newOrder });
+    } catch (err) {
+      next(err);
+    }  
+  };
 }

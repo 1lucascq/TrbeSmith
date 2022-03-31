@@ -19,13 +19,11 @@ export default class LoginController {
   public create = async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (!SECRET) {
-        console.log('ERRO POR CAUSA DA LOGICA DO SECRET');
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'secret unavailable' });
       }
 
       const { username, password }: IUser = req.body;
       
-      // como login retornaria um 'undefined' --- é em caso de erro de requisição?
       const id: number | false | undefined = await this.loginService.login({ username, password });
       
       if (!id) {
@@ -35,7 +33,6 @@ export default class LoginController {
       }
       
       const token = jwt.sign({ payload: { id, username } }, SECRET, SignOptions);
-      console.log('TOKEN É::::', token);
 
       return res.status(StatusCodes.OK).json({ token });    
     } catch (err) {

@@ -16,14 +16,13 @@ export default class UsersController {
   public create = async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (!SECRET) {
-        console.log('ERRO POR CAUSA DA LOGICA DO SECRET');
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'secret unavailable' });
       }
 
       const { username, classe, level, password }: IUser = req.body;
-      await this.usersService.create({ username, classe, level, password });
-      const token = jwt.sign({ payload: { username, classe, level } }, SECRET, SignOptions);
-      console.log('TOKEN É::::', token);
+      const payload = await this.usersService.create({ username, classe, level, password });
+      // const token = jwt.sign({ payload: { username, classe, level } }, SECRET, SignOptions);
+      const token = jwt.sign(payload, SECRET, SignOptions);
 
       return res.status(StatusCodes.CREATED).json({ token });    
     } catch (err) {

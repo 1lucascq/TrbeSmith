@@ -5,7 +5,6 @@ import { IUser } from '../interfaces';
 import 'express-async-errors';
 import UsersService from '../services/UsersService';
 
-// const SECRET: string | undefined = process.env.JWT_SECRET;
 const SECRET = 'segredoSecreto';
 
 const SignOptions: jwt.SignOptions = {

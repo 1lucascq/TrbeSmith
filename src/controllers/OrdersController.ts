@@ -22,7 +22,8 @@ export default class OrdersController {
       const { products } = req.body;
       const { authorization } = req.headers;
       const { userData } = req;
-      
+      // const userData = { id: 1, username: 'aaaa' }; \\ p/ testes e deletar depois
+
       if (!authorization) {
         return res.status(StatusCodes.UNAUTHORIZED)
           .json({ error: 'Unauthorized' });

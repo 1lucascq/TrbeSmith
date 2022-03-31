@@ -53,7 +53,7 @@ export interface IProcessEnv {
 }
 
 export interface ITokenPayload extends JwtPayload {
-  payload?: {
+  userData?: {
     id: number;
     username: string;
   }

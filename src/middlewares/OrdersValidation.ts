@@ -5,7 +5,7 @@ import Joi from 'joi';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { INewOrder } from '../interfaces';
 
-const SECRET = 'a';
+const SECRET = 'segredoSecreto';
 
 const getSchema = (products: number[]) => Joi.object({
   products: Joi.array().items(Joi.number().strict().min(1)).min(1).required()

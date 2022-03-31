@@ -42,7 +42,6 @@ const checkToken = (req: Request, res: Response, next: NextFunction) => {
     if (!authorization) return res.status(401).json({ error: 'Token not found' });
 
     const { payload } = jwt.verify(authorization, SECRET) as JwtPayload;
-    console.log(payload);
     
     const { id, username } = payload;
     req.userData = { id, username };

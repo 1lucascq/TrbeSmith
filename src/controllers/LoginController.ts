@@ -7,7 +7,7 @@ import LoginService from '../services/LoginService';
 
 // q q tinha que fazer aq?
 // const SECRET: string | undefined = process.env.JWT_SECRET;
-const SECRET: string | undefined = 'a';
+const SECRET = 'segredoSecreto';
 
 const SignOptions: jwt.SignOptions = {
   expiresIn: '1d',
